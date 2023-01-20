@@ -132,9 +132,12 @@ if separation_auto == "":
 
 
 if separation_auto == "N":
-    print("")
-    doss_trav = input("Dans quel dossier se trouvent les sous-dossiers trn, val et tst contenant les fichiers las "
-                      "d'entrainement? \n")
+    if systeme == "D":
+        doss_trav = "."
+    else:
+        print("")
+        doss_trav = input("Dans quel dossier se trouvent les sous-dossiers trn, val et tst contenant les fichiers las "
+                          "d'entrainement? \n")
 else:
     print("")
     doss_trav = input("Dans quel dossier se trouvent les fichiers las d'entrainement? \n")
