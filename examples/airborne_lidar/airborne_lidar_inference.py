@@ -1,7 +1,8 @@
 # add the parent folder to the python path to access convpoint library
-import sys
+import os
 import warnings
-sys.path.append('D:/DEV/ConvPoint-Dev')
+# sys.path.append('/home/ubuntu/anaconda2/envs/pytorch_convpoint_p36/ConvPoint')
+# sys.path.append('C:\\Users\\pbug\\.conda\\envs\\pytorch_convpoint_p36\\ConvPoint')
 
 import argparse
 import h5py
@@ -14,15 +15,15 @@ from torch.utils.data import Dataset
 from pathlib import Path
 from tqdm import tqdm
 
-from airborne_lidar_seg import get_model, nearest_correspondance, count_parameters, class_mode
+from airborne_lidar_seg_wandb import get_model, nearest_correspondance, count_parameters, class_mode
 from airborne_lidar_utils import write_features
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     # '--modeldir' for backward compatibility
-    parser.add_argument("--model_pth", "--modeldir", default='D:/DEV/ConvPoint-Dev/models/state_dict_dales.pth', type=str)
-    parser.add_argument("--rootdir", default='D:/DEV/ConvPoint-Dev/convpoint_tests/data/tst', type=str,
+    parser.add_argument("--model_pth", "--modeldir", default=None, type=str)
+    parser.add_argument("--rootdir", default=None, type=str,
                         help="Directory containing input test las files.")
     parser.add_argument("--outdir", default=None, type=str,
                         help="Directory where to output inference results (default: <rootdir>/out).")
@@ -38,12 +39,15 @@ def parse_args():
     parser.add_argument("--features", default="xyz", type=str,
                         help="Features to process. xyzni means xyz + number of returns + intensity. Default is xyz."
                              "Currently, only xyz and xyzni are supported for this dataset.")
-    parser.add_argument("--mode", default=4, type=int,
-                        help="Class mode. Currently 2 choices available. "
+    parser.add_argument("--mode", default=5, type=int,
+                        help="Class mode."
                              "1: building, water, ground."
                              "2: 5 classes: building, water, ground, low vegetation and medium + high vegetation"
                              "3: 6 classes: building, water, ground, low vegetation, medium and high vegetation"
-                             "4: DALES.")
+                             "4: DALES."
+                             "5: 3 classes: ground, vegetation, building"
+                             "6: 4 classes: ground, vegetation, building, pole"
+                             "7: 5 classes: ground, vegetation, building, power line, pole")
     args = parser.parse_args()
     print(args)
     return args
@@ -241,7 +245,7 @@ def test(filename, model, model_features, info_class, args):
     pts_src = xyz[mask]
 
     # create the scores for all points
-    scores = nearest_correspondance(pts_src, xyz, scores, K=1)
+    scores = nearest_correspondance(pts_src, xyz, scores, k=1)
 
     # compute softmax
     scores = scores - scores.max(axis=1)[:, None]
@@ -254,7 +258,8 @@ def test(filename, model, model_features, info_class, args):
     with laspy.file.File(filename0) as in_file:
         header = in_file.header
         xyz = np.vstack((in_file.x, in_file.y, in_file.z)).transpose()
-        write_to_las(outdir / f"{las_filename}_predictions.las",
+        str_modele = os.path.basename(args.model_pth)[:-24]
+        write_to_las(outdir / f"{las_filename}_classif_{str_modele}.las",
                      xyz=xyz, pred=scores, header=header, info_class=info_class['class_info'])
 
 
@@ -276,8 +281,21 @@ def main():
 
     info_class = class_mode(args.mode)
     model, feats = load_model_eval(Path(args.model_pth), info_class['nb_class'], args)
+    num = 0
+    nb = len(dataset_dict)
     for filename in dataset_dict:
+        num += 1
+        #filename2 = Path(args.rootdir) / f"{filename}.las"
+        #nuage = laspy.file.File(filename2, mode="r")
+        #nbpts = len(nuage)
+        #nuage.close()
+        #if nbpts > 5000:
+        print("")
+        print("Classification du fichier {0}/{1}...".format(num, nb))
         test(filename, model, feats, info_class, args)
+        #else:
+        #    print("")
+        #    print("Omission du fichier {0}/{1} (seulement {2} points)".format(num, nb, nbpts))
 
 
 if __name__ == '__main__':

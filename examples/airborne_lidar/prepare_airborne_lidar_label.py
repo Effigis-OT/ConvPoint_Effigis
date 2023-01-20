@@ -16,8 +16,8 @@ def parse_args():
     Parse arguments.
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--folder', '-f', default='D:/DEV/ConvPoint-Dev/convpoint_tests/data/DALES', help='Path to data folder')
-    parser.add_argument("--dest", '-d', default='D:/DEV/ConvPoint-Dev/convpoint_tests/prepared/DALES', help='Path to destination folder')
+    parser.add_argument('--folder', '-f', default=None, help='Path to data folder')
+    parser.add_argument("--dest", '-d', default=None, help='Path to destination folder')
     args = parser.parse_args()
     return args
 
@@ -37,15 +37,15 @@ def read_las_format(raw_path, normalize=True):
 
     if normalize:
         # Converting data to relative xyz reference system.
-        min_lbs= np.min(labels)
-        max_lbs= np.max(labels)
-        mask= (labels >= 0)
-        x= x[mask].reshape((-1,1))
-        y = y[mask].reshape((-1,1))
-        z = z[mask].reshape((-1,1))
-        intensity = intensity[mask].reshape((-1,1))
-        nb_return = nb_return[mask].reshape((-1,1))
-        labels = labels[mask].reshape((-1,1))
+        min_lbs = np.min(labels)
+        max_lbs = np.max(labels)
+        mask = (labels >= 0)
+        x = x[mask].reshape((-1, 1))
+        y = y[mask].reshape((-1, 1))
+        z = z[mask].reshape((-1, 1))
+        intensity = intensity[mask].reshape((-1, 1))
+        nb_return = nb_return[mask].reshape((-1, 1))
+        labels = labels[mask].reshape((-1, 1))
         norm_x = x - np.min(x)
         norm_y = y - np.min(y)
         norm_z = z - np.min(z)
@@ -72,7 +72,8 @@ def main():
         if len(dataset_dict[dataset]) == 0:
             warnings.warn(f"{base_dir / dataset} is empty")
 
-    print(f"Las files per dataset:\n Trn: {len(dataset_dict['trn'])} \n Val: {len(dataset_dict['val'])} \n Tst: {len(dataset_dict['tst'])}")
+    print(f"Las files per dataset:\n Trn: {len(dataset_dict['trn'])} \n Val: {len(dataset_dict['val'])} \n "
+          f"Tst: {len(dataset_dict['tst'])}")
 
     # Write new hdfs of XYZ + number of return + intensity, with labels.
     for dst, values in dataset_dict.items():
