@@ -50,7 +50,8 @@ modeles_dispo["3"] = ["VexcelM28brut221", "20", "32672", "CP_fd_VexcelM28brut221
                                                          "600iter_batch8_2work_2021-12-16-13-37-31.pth", 5]
 modeles_dispo["4"] = ["VexcelM27brut221Poteaux", "10", "32672", "CP_fd_VexcelM27brut221Poteaux_32672pts_10block_0drop_"
                                                          "0p001lr_20ep_600iter_batch8_2work_2022-05-19-14-35-41.pth", 6]
-
+modeles_dispo["5"] = ["VexcelSherb331brut_5classes", "20", "32672", "CP_fd_Sherb331brut_5classes_32672pts_20block_"
+                                                "0drop_0p001lr_20ep_600iter_batch8_2work_2023-01-23-20-45-14.pth", 7]
 
 print("")
 systeme = input("Quel système est utilisé? (D pour Docker par défaut/W pour Windows/L pour Linux)\n").upper()
