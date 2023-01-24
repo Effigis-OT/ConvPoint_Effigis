@@ -33,7 +33,7 @@ torch.cuda.manual_seed_all(hash("so runs are repeatable") % 2**32 - 1)
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", default=True)
-    parser.add_argument("--savepts", action="store_true")
+    parser.add_argument("--savepts", default=True, action="store_true")
     parser.add_argument("--savedir", default=None, type=str)
     parser.add_argument("--rootdir", default=None, type=str)
     parser.add_argument("--batchsize", "-b", default=8, type=int)
@@ -693,10 +693,12 @@ def test(args, flist_test, model_folder, model_name, info_class):
 
         if args.savepts:
             # Save predictions
-            out_folder = model_folder / 'tst'
-            out_folder.mkdir(exist_ok=True)
-            prediction2ply(model_folder / f"{filename}_predictions.ply", xyz=xyz, prediction=scores,
-                           info_class=info_class['class_info'])
+            out_folder = os.path.join(model_folder, 'tst')
+            if not os.path.exists(out_folder):
+                os.mkdir(out_folder)
+            time_string_2 = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+            out_file = os.path.join(model_folder, "{0}_predictions_{1}.ply".format(filename, time_string_2))
+            prediction2ply(out_file, xyz=xyz, prediction=scores, info_class=info_class['class_info'])
 
 
 def main():
