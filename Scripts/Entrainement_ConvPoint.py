@@ -248,7 +248,7 @@ if separation_auto == "O":
     for f6 in os.listdir(doss_intrants_tst):
         shutil.move(os.path.join(doss_intrants_tst, f6), doss_trav)
 
-#shutil.rmtree(doss_datasets)
+shutil.rmtree(doss_datasets)
 
 fin = time.time()
 
