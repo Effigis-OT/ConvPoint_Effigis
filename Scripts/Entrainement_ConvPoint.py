@@ -217,9 +217,12 @@ if not os.path.exists(doss_res):
     os.system("mkdir {0}".format(doss_res))
 
 if systeme == "D":
-    doss_modele = doss_trav
+    doss_modele = os.path.join(doss_trav, "models")
 else:
     doss_modele = os.path.join(chemin_CP, "models")
+
+if not os.path.exists(doss_modele):
+    os.system("mkdir {0}".format(doss_modele))
 
 # doss_datasets_results = os.path.join(doss_datasets, "results")
 # if not os.path.exists(doss_datasets_results):
