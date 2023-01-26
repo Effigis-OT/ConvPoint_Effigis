@@ -598,7 +598,7 @@ def train(args, dataset_dict, info_class):
             best_epoch = epoch
             mod_folder = args.savedir
             last_saved_model = "CP_{0}_{1}_{2}classes_{3}pts_{4}block_{5}drop_{6}lr_{7}ep_{8}iter_batch{9}_{10}work_" \
-                               "{11}.pth".format(typ_entr, args.dsname, nb_class, args.npoints, args.blocksize,
+                               "{11}.pth".format(typ_entr, args.dsname, nb_class-1, args.npoints, args.blocksize,
                                                  args.drop, args.lr.replace(".", "p"), args.nepochs, args.iter,
                                                  args.batchsize, args.num_workers, time_string)
             torch.save(state, os.path.join(mod_folder, last_saved_model))
@@ -701,13 +701,12 @@ def test(args, flist_test, model_folder, model_name, info_class):
             out_folder = os.path.join(args.resdir, 'tst')
             if not os.path.exists(out_folder):
                 os.mkdir(out_folder)
-            time_string_2 = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
             lastest0 = [os.path.join(args.testdir, fich) for fich in os.listdir(args.testdir)
                         if fich.upper().endswith('.LAS')][0]
             with laspy.file.File(lastest0) as in_file:
                 header = in_file.header
                 xyz = np.vstack((in_file.x, in_file.y, in_file.z)).transpose()
-                out_file = os.path.join(args.resdir, "{0}_predictions_{1}.las".format(filename, time_string_2))
+                out_file = os.path.join(args.resdir, "{0}_preds_{1}.las".format(filename, model_name[:-4]))
                 write_to_las(out_file, xyz=xyz, pred=scores, header=header, info_class=info_class['class_info'])
 
 def pred_to_asprs(pred, info_class):
