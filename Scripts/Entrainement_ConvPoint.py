@@ -210,6 +210,12 @@ doss_datasets_tst = os.path.join(doss_datasets, "tst")
 if not os.path.exists(doss_datasets_tst):
     os.system("mkdir {0}".format(doss_datasets_tst))
 
+doss_test = os.path.join(doss_trav, "tst")
+
+doss_res = os.path.join(doss_trav, "Resultats")
+if not os.path.exists(doss_res):
+    os.system("mkdir {0}".format(doss_res))
+
 if systeme == "D":
     doss_modele = doss_trav
 else:
@@ -231,11 +237,12 @@ print("Entrainement selon données des dossiers datasets")
 # airborne_lidar_seg_wandb.py"
 script_train = os.path.join(chemin_CP, "examples/airborne_lidar/airborne_lidar_seg_wandb.py")
 
-os.system("python {0} --savedir {1} --rootdir {2} --model_state {3} --dsname {4} --lr {5} --npoints {6} "
-                  "--blocksize {7} --iter {8} --nepochs {9} --batchsize {10} --num_workers {11} --finetune {12} "
-                  "--decapit {13} --mode {14}".format(script_train, doss_modele, doss_datasets, modele_pth, nom_entrain,
-                                                  lr0, nbpoints0, blocksize0, iter0, nbepochs0, batchsize0, nbworkers0,
-                                                  option_finetune, option_decapit, code_classes))
+os.system("python {0} --savedir {1} --rootdir {2} --testdir {3} --resdir {4} --model_state {5} --dsname {6} --lr {7} "
+          "--npoints {8} --blocksize {9} --iter {10} --nepochs {11} --batchsize {12} --num_workers {13} "
+          "--finetune {14} --decapit {15} --mode {16}".format(script_train, doss_modele, doss_datasets, doss_test,
+                                                              doss_res, modele_pth, nom_entrain, lr0, nbpoints0,
+                                                              blocksize0, iter0, nbepochs0, batchsize0, nbworkers0,
+                                                              option_finetune, option_decapit, code_classes))
 
 if separation_auto == "O":
     print("")
