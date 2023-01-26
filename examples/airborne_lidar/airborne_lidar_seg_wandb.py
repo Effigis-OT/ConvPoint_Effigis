@@ -21,6 +21,8 @@ import h5py
 from pathlib import Path
 from examples.airborne_lidar.airborne_lidar_viz import prediction2ply, error2ply
 import wandb
+import laspy
+
 
 # Ensure deterministic behavior
 torch.backends.cudnn.deterministic = True
@@ -36,6 +38,8 @@ def parse_args():
     parser.add_argument("--savepts", default=True, action="store_true")
     parser.add_argument("--savedir", default=None, type=str)
     parser.add_argument("--rootdir", default=None, type=str)
+    parser.add_argument("--testdir", default=None, type=str)
+    parser.add_argument("--resdir", default=None, type=str)
     parser.add_argument("--batchsize", "-b", default=8, type=int)
     parser.add_argument("--npoints", default=8168, type=int, help="Number of points to be sampled in the block.")
     parser.add_argument("--blocksize", default=25, type=int,
@@ -693,12 +697,34 @@ def test(args, flist_test, model_folder, model_name, info_class):
 
         if args.savepts:
             # Save predictions
-            out_folder = os.path.join(model_folder, 'tst')
+            out_folder = os.path.join(args.resdir, 'tst')
             if not os.path.exists(out_folder):
                 os.mkdir(out_folder)
             time_string_2 = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-            out_file = os.path.join(model_folder, "{0}_predictions_{1}.ply".format(filename, time_string_2))
-            prediction2ply(out_file, xyz=xyz, prediction=scores, info_class=info_class['class_info'])
+            lastest0 = [os.path.join(args.testdir, fich) for fich in os.listdir(args.testdir)
+                        if fich.upper().endswith('.LAS')][0]
+            with laspy.file.File(lastest0) as in_file:
+                header = in_file.header
+                xyz = np.vstack((in_file.x, in_file.y, in_file.z)).transpose()
+                out_file = os.path.join(args.resdir, "{0}_predictions_{1}.las".format(filename, time_string_2))
+                write_to_las(out_file, xyz=xyz, pred=scores, header=header, info_class=info_class['class_info'])
+
+def pred_to_asprs(pred, info_class):
+    """Converts predicted values (0->n) to the corresponding ASPRS class."""
+    labels2 = np.full(shape=pred.shape, fill_value=0, dtype=int)
+    for key, value in info_class.items():
+        labels2[pred == value['mode']] = int(key)
+    return labels2
+
+def write_to_las(filename, xyz, pred, header, info_class):
+    """Write xyz and ASPRS predictions to las file format. """
+    # TODO: Write CRS info with file.
+    with laspy.file.File(filename, mode='w', header=header) as out_file:
+        out_file.x = xyz[:, 0]
+        out_file.y = xyz[:, 1]
+        out_file.z = xyz[:, 2]
+        pred = pred_to_asprs(pred, info_class)
+        out_file.classification = pred
 
 
 def main():
