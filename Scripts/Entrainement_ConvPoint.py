@@ -212,7 +212,7 @@ if not os.path.exists(doss_datasets_tst):
 
 doss_test = os.path.join(doss_trav, "tst")
 
-doss_res = os.path.join(doss_trav, "Resultats")
+doss_res = os.path.join(doss_trav, "resultats")
 if not os.path.exists(doss_res):
     os.system("mkdir {0}".format(doss_res))
 
