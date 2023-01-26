@@ -64,16 +64,11 @@ elif systeme == "W":
 else:
     chemin_CP = r"/home/ubuntu/anaconda2/envs/pytorch_convpoint_p36/ConvPoint"
 
-print("")
-nuage_init = input("Quel fichier (las ou laz) veux-tu classifier? \n")
-
-if nuage_init.upper().endswith("LAZ"):
-    nuage = nuage_init[:-3]+"las"
-    os.system("laszip -i {0} -o {1}".format(nuage_init, nuage))
+if systeme == "D":
+    doss_intrant = "."
 else:
-    nuage = nuage_init
-
-doss_intrant = os.path.dirname(nuage_init)
+    print("")
+    doss_intrant = input("Dans quel dossier se trouvent les fichiers las à classifier? \n")
 
 maintenant = datetime.datetime.now().strftime('%Y%m%d_%Hh%M')
 doss_trav = os.path.join(doss_intrant, "Classif_{0}".format(maintenant))
