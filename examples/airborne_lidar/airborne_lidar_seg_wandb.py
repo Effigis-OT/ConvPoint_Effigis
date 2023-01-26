@@ -597,9 +597,10 @@ def train(args, dataset_dict, info_class):
             }
             best_epoch = epoch
             mod_folder = args.savedir
-            last_saved_model = "CP_{0}_{1}_{2}pts_{3}block_{4}drop_{5}lr_{6}ep_{7}iter_batch{8}_{9}work_{10}.pth".\
-                format(typ_entr, args.dsname, args.npoints, args.blocksize, args.drop, args.lr.replace(".", "p"),
-                       args.nepochs, args.iter, args.batchsize, args.num_workers, time_string)
+            last_saved_model = "CP_{0}_{1}_{2}classes_{3}pts_{4}block_{5}drop_{6}lr_{7}ep_{8}iter_batch{9}_{10}work_" \
+                               "{11}.pth".format(typ_entr, args.dsname, nb_class, args.npoints, args.blocksize,
+                                                 args.drop, args.lr.replace(".", "p"), args.nepochs, args.iter,
+                                                 args.batchsize, args.num_workers, time_string)
             torch.save(state, os.path.join(mod_folder, last_saved_model))
             print("Model saved for epoch {0}".format(epoch))
 
