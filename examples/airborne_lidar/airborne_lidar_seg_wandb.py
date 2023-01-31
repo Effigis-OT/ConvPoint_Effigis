@@ -679,6 +679,10 @@ def test(args, flist_test, model_folder, model_name, info_class):
 
             cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(range(nb_class)))
 
+            print("")
+            print("Confusion matrix")
+            print(cm)
+
             cl_acc = metrics.stats_accuracy_per_class(cm)
             cl_iou = metrics.stats_iou_per_class(cm)
             cl_fscore = metrics.stats_f1score_per_class(cm)
