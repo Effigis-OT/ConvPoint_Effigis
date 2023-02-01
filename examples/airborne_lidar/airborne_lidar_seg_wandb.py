@@ -677,7 +677,8 @@ def test(args, flist_test, model_folder, model_name, info_class):
             # tst_logs = InformationLogger(model_folder, 'tst')
             lbl = ds_tst.labels[:, :]
 
-            cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(range(nb_class)))
+            # cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(range(nb_class)))
+            cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(info_class['class_info'].keys()))
 
             print("")
             print("Confusion matrix")
