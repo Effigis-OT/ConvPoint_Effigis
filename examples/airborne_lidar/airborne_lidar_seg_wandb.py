@@ -527,6 +527,11 @@ def train(args, dataset_dict, info_class):
             t.set_postfix(OA=wblue(oa), AA=wblue(f"{acc[0]:.4f}"), IOU=wblue(f"{iou[0]:.4f}"),
                           LOSS=wblue(f"{train_loss / cm.sum():.4e}"))
             # wandb.log({'trn/oa': cm, 'trn/loss': train_loss/ cm.sum(), 'trn/iou': iou[0]})
+
+        print("")
+        print("Confusion matrix - ent:")
+        print(cm)
+
         # wandb.log({'trn/oa': float(oa), 'trn/loss': train_loss/ cm.sum(), 'trn/iou': iou[0]})
 
         fscore = metrics.stats_f1score_per_class(cm)
@@ -569,6 +574,11 @@ def train(args, dataset_dict, info_class):
                               LOSS=wgreen(f"{val_loss / cm_val.sum():.4e}"))
                 # wandb.log({'val/oa': cm_val, 'val/loss': val_loss/ cm_val.sum(), 'val/iou': iou_val[0]})
         # wandb.log({'val/oa': float(oa_val), 'val/loss': val_loss/ cm_val.sum(), 'val/iou': iou_val[0]})
+
+        print("")
+        print("Confusion matrix - val:")
+        print(cm_val)
+
         tloss = train_loss / cm.sum()
         vloss = val_loss / cm_val.sum()
         loss_difference = vloss - tloss
@@ -681,7 +691,7 @@ def test(args, flist_test, model_folder, model_name, info_class):
             cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(info_class['class_info'].keys()))
 
             print("")
-            print("Confusion matrix")
+            print("Confusion matrix - test:")
             print(cm)
 
             cl_acc = metrics.stats_accuracy_per_class(cm)
