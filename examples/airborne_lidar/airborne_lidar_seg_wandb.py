@@ -688,8 +688,12 @@ def test(args, flist_test, model_folder, model_name, info_class):
             lbl = ds_tst.labels[:, :]
 
             # cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(range(nb_class)))
-            cm = confusion_matrix(lbl.ravel(), scores.ravel(),
-                                  labels=list(map(int, list(info_class['class_info'].keys()))))
+            etiq = list(map(int, list(info_class['class_info'].keys())))
+            cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=etiq)
+
+            print("")
+            print("Liste:")
+            print(etiq)
 
             print("")
             print("Confusion matrix - test:")
