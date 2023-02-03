@@ -687,7 +687,15 @@ def test(args, flist_test, model_folder, model_name, info_class):
             # tst_logs = InformationLogger(model_folder, 'tst')
             lbl = ds_tst.labels[:, :]
 
-            cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(range(nb_class)))
+            # Transfert des classes 1 à n vers classes ASPRS
+            i = max(scores)
+            for cle in reversed(list(info_class["class_info"].keys())):
+                scores[scores == i] = int(cle)
+                i -= 1
+
+            # cm = confusion_matrix(lbl.ravel(), scores.ravel(), labels=list(range(nb_class)))
+            cm = confusion_matrix(lbl.ravel(), scores.ravel(),
+                                  labels=list(map(int, list(info_class['class_info'].keys()))))
 
             print("")
             print("Confusion matrix - test:")
@@ -701,8 +709,8 @@ def test(args, flist_test, model_folder, model_name, info_class):
             print_metric('Test', 'Accuracy', cl_acc)
             print_metric('Test', 'iou', cl_iou)
             print_metric('Test', 'F1-Score', cl_fscore)
-            tst_avg_score = {'loss': -1, 'acc': cl_acc[0], 'iou': cl_iou[0], 'fscore': [0]}
-            tst_class_score = {'acc': cl_acc[1], 'iou': cl_iou[1], 'fscore': cl_fscore[1]}
+            # tst_avg_score = {'loss': -1, 'acc': cl_acc[0], 'iou': cl_iou[0], 'fscore': [0]}
+            # tst_class_score = {'acc': cl_acc[1], 'iou': cl_iou[1], 'fscore': cl_fscore[1]}
             # tst_logs.add_metric_values(tst_avg_score, -1)
             # tst_logs.add_class_scores(tst_class_score, -1)
 
