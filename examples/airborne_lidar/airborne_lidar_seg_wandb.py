@@ -684,7 +684,7 @@ def test(args, flist_test, model_folder, model_name, info_class):
 
         # Compute confusion matrix
         if args.test_labels:
-            log_folder = os.path.join(args.resdir, 'tst')
+            log_folder = Path(os.path.join(args.resdir, 'tst'))
             tst_logs = InformationLogger(log_folder, 'tst')
             lbl = ds_tst.labels[:, :]
 
