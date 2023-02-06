@@ -684,9 +684,8 @@ def test(args, flist_test, model_folder, model_name, info_class):
 
         # Compute confusion matrix
         if args.test_labels:
-            log_folder = os.path.join(args.resdir, 'tst')
             #tst_logs = InformationLogger(log_folder, 'tst')
-            log_tst = os.path.join(log_folder, "{0}_preds_{1}_log.txt".format(filename, model_name[:-4]))
+            log_tst = os.path.join(args.resdir, "{0}_preds_{1}_log.txt".format(filename, model_name[:-4]))
             lbl = ds_tst.labels[:, :]
 
             # Transfert des classes 1 à n vers classes ASPRS
