@@ -684,8 +684,9 @@ def test(args, flist_test, model_folder, model_name, info_class):
 
         # Compute confusion matrix
         if args.test_labels:
-            log_folder = Path(os.path.join(args.resdir, 'tst'))
-            tst_logs = InformationLogger(log_folder, 'tst')
+            log_folder = os.path.join(args.resdir, 'tst')
+            #tst_logs = InformationLogger(log_folder, 'tst')
+            log_tst = os.path.join(log_folder, "{0}_preds_{1}_log.txt".format(filename, model_name[:-4]))
             lbl = ds_tst.labels[:, :]
 
             # Transfert des classes 1 à n vers classes ASPRS
@@ -709,10 +710,25 @@ def test(args, flist_test, model_folder, model_name, info_class):
             print_metric('Test', 'Accuracy', cl_acc)
             print_metric('Test', 'iou', cl_iou)
             print_metric('Test', 'F1-Score', cl_fscore)
-            tst_avg_score = {'loss': -1, 'acc': cl_acc[0], 'iou': cl_iou[0], 'fscore': [0]}
-            tst_class_score = {'acc': cl_acc[1], 'iou': cl_iou[1], 'fscore': cl_fscore[1]}
-            tst_logs.add_metric_values(tst_avg_score, -1)
-            tst_logs.add_class_scores(tst_class_score, -1)
+            # tst_avg_score = {'loss': -1, 'acc': cl_acc[0], 'iou': cl_iou[0], 'fscore': [0]}
+            # tst_class_score = {'acc': cl_acc[1], 'iou': cl_iou[1], 'fscore': cl_fscore[1]}
+            # tst_logs.add_metric_values(tst_avg_score, -1)
+            # tst_logs.add_class_scores(tst_class_score, -1)
+
+            ligne_classes = ""
+            for code1 in info_class["class_info"].keys():
+                ligne_classes += "{0}\t".format(info_class["class_info"][code1]["name"])
+            with open(log_tst, "a") as log:
+                log.write("Confusion matrix - test:\n")
+                log.write(ligne_classes)
+                log.write(cm)
+                log.write("\n")
+                log.write("Accuracy - test:\n")
+                log.write("Average: {:.3f}".format(cl_acc[0]))
+                i = 0
+                for code2 in info_class["class_info"].keys():
+                    log.write("{0}: {1:.3f}".format(info_class["class_info"][code2]["name"], cl_acc[1][i]))
+                    i += 1
 
             # write error file.
             # error2ply(model_folder / f"{filename}_error.ply", xyz=xyz, labels=lbl, prediction=scores,
