@@ -718,15 +718,15 @@ def test(args, flist_test, model_folder, model_name, info_class):
             for code1 in info_class["class_info"].keys():
                 ligne_classes += "{0:>15}\t".format(info_class["class_info"][code1]["name"])
             with open(log_tst, "a") as log:
-                log.write("Confusion matrix - test:\n")
+                log.write("Confusion matrix - test:\n\n")
                 log.write(ligne_classes + "\n")
                 log.write("\n".join(["\t".join([str(cell).rjust(15) for cell in row]) for row in cm]))
-                log.write("\n")
-                log.write("Accuracy - test:\n")
-                log.write("Average: {:.3f}".format(cl_acc[0]))
+                log.write("\n\n\n")
+                log.write("Accuracy - test:\n\n")
+                log.write("Average: {:.3f}\n".format(cl_acc[0]))
                 i = 0
                 for code2 in info_class["class_info"].keys():
-                    log.write("{0}: {1:.3f}".format(info_class["class_info"][code2]["name"], cl_acc[1][i]))
+                    log.write("{0}: {1:.3f}\n".format(info_class["class_info"][code2]["name"], cl_acc[1][i]))
                     i += 1
 
             # write error file.
