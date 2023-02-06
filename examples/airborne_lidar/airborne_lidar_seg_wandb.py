@@ -716,11 +716,11 @@ def test(args, flist_test, model_folder, model_name, info_class):
 
             ligne_classes = ""
             for code1 in info_class["class_info"].keys():
-                ligne_classes += "{0}\t".format(info_class["class_info"][code1]["name"])
+                ligne_classes += "{0:>15}\t".format(info_class["class_info"][code1]["name"])
             with open(log_tst, "a") as log:
                 log.write("Confusion matrix - test:\n")
-                log.write(ligne_classes)
-                log.write(cm)
+                log.write(ligne_classes + "\n")
+                log.write("\n".join(["\t".join([str(cell).rjust(15) for cell in row]) for row in cm]))
                 log.write("\n")
                 log.write("Accuracy - test:\n")
                 log.write("Average: {:.3f}".format(cl_acc[0]))
