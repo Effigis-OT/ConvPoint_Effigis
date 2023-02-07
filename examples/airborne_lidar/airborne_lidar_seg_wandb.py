@@ -718,7 +718,8 @@ def test(args, flist_test, model_folder, model_name, info_class):
             for code1 in info_class["class_info"].keys():
                 ligne_classes += "{0:>15}\t".format(info_class["class_info"][code1]["name"])
             with open(log_tst, "a") as log:
-                log.write("Confusion matrix - test:\n\n")
+                log.write("Stats - test:\n\n\n")
+                log.write("Confusion matrix:\n\n")
                 log.write(ligne_classes + "\n")
                 # log.write("\n".join(["\t".join([str(cell).rjust(15) for cell in row]) for row in cm]))
                 h = 0
@@ -729,13 +730,30 @@ def test(args, flist_test, model_folder, model_name, info_class):
                     log.write("\t".join([str(cell).rjust(15) for cell in row]))
                     log.write("\n")
                     h += 1
-                log.write("\n\n\n")
-                log.write("Accuracy - test:\n\n")
-                log.write("Average: {:.3f}\n".format(cl_acc[0]))
+                log.write("\n\n")
+
+                log.write("Accuracy:\n\n")
                 i = 0
                 for code2 in info_class["class_info"].keys():
-                    log.write("{0}: {1:.3f}\n".format(info_class["class_info"][code2]["name"], cl_acc[1][i]))
+                    log.write("\t{0}: {1:.3f}\n".format(info_class["class_info"][code2]["name"], cl_acc[1][i]))
                     i += 1
+                log.write("\n\tAverage: {:.3f}\n".format(cl_acc[0]))
+                log.write("\n\n")
+
+                log.write("IoU:\n\n")
+                j = 0
+                for code3 in info_class["class_info"].keys():
+                    log.write("\t{0}: {1:.3f}\n".format(info_class["class_info"][code3]["name"], cl_iou[1][j]))
+                    j += 1
+                log.write("\n\tAverage: {:.3f}\n".format(cl_iou[0]))
+                log.write("\n\n")
+
+                log.write("F1-Score:\n\n")
+                k = 0
+                for code4 in info_class["class_info"].keys():
+                    log.write("\t{0}: {1:.3f}\n".format(info_class["class_info"][code4]["name"], cl_fscore[1][k]))
+                    k += 1
+                log.write("\n\tAverage: {:.3f}\n".format(cl_fscore[0]))
 
             # write error file.
             # error2ply(model_folder / f"{filename}_error.ply", xyz=xyz, labels=lbl, prediction=scores,
