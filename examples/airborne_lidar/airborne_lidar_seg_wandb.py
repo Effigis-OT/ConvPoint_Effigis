@@ -720,7 +720,7 @@ def test(args, flist_test, model_folder, model_name, info_class):
             with open(log_tst, "a") as log:
                 log.write("Confusion matrix - test:\n\n")
                 log.write(ligne_classes + "\n")
-                log.write("\n".join(["\t".join([str(cell).rjust(15) for cell in row]) for row in cm]))
+                # log.write("\n".join(["\t".join([str(cell).rjust(15) for cell in row]) for row in cm]))
                 h = 0
                 for row in cm:
                     code_cla = list(info_class["class_info"].keys())[h]
