@@ -714,7 +714,7 @@ def test(args, flist_test, model_folder, model_name, info_class):
             # tst_logs.add_metric_values(tst_avg_score, -1)
             # tst_logs.add_class_scores(tst_class_score, -1)
 
-            ligne_classes = ""
+            ligne_classes = "".rjust(15)
             for code1 in info_class["class_info"].keys():
                 ligne_classes += "{0:>15}\t".format(info_class["class_info"][code1]["name"])
             with open(log_tst, "a") as log:
@@ -726,8 +726,7 @@ def test(args, flist_test, model_folder, model_name, info_class):
                     code_cla = list(info_class["class_info"].keys())[h]
                     cla = info_class["class_info"][code_cla]['name']
                     log.write(str(cla).rjust(15))
-                    for cell in row:
-                        log.write("\t".join([str(cell).rjust(15) for cell in row]))
+                    log.write("\t".join([str(cell).rjust(15) for cell in row]))
                     log.write("\n")
                     h += 1
                 log.write("\n\n\n")
