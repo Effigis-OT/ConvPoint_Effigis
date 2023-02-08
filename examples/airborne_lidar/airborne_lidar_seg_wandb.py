@@ -821,7 +821,7 @@ def main():
         print("")
         print("TEST")
         test(args, dataset_dict['tst'], model_folder, model_name, info_class)
-
+    wandb.finish()
 
 if __name__ == '__main__':
     main()
