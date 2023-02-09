@@ -688,13 +688,15 @@ def test(args, flist_test, model_folder, model_name, info_class):
             log_tst = os.path.join(args.resdir, "{0}_preds_{1}_log.txt".format(filename, model_name[:-4]))
             lbl = ds_tst.labels[:, :]
 
+            scores_eval = scores.copy()
+
             # Transfert des classes 1 à n vers classes ASPRS
-            i = max(scores)
+            i = max(scores_eval)
             for cle in reversed(list(info_class["class_info"].keys())):
-                scores[scores == i] = int(cle)
+                scores_eval[scores_eval == i] = int(cle)
                 i -= 1
 
-            cm = confusion_matrix(lbl.ravel(), scores.ravel(),
+            cm = confusion_matrix(lbl.ravel(), scores_eval.ravel(),
                                   labels=list(map(int, list(info_class['class_info'].keys()))))
 
             print("")
