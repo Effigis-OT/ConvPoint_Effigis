@@ -791,7 +791,7 @@ def write_to_las(filename, xyz, pred, header, info_class):
 
 
 def main():
-    wandb.init(project="convpoint_vexcel")
+    run_wandb = wandb.init(project="convpoint_vexcel")
 
     args = parse_args()
     print(args)
@@ -821,7 +821,7 @@ def main():
         print("")
         print("TEST")
         test(args, dataset_dict['tst'], model_folder, model_name, info_class)
-    wandb.finish()
+    run_wandb.finish()
 
 if __name__ == '__main__':
     main()
