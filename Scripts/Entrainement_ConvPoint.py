@@ -266,3 +266,4 @@ fin = time.time()
 
 print("")
 print("L'ensemble des traitements a pris {0}".format(temps_ecoul(debut, fin)))
+os.system("pause")
