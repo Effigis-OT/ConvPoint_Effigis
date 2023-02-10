@@ -48,7 +48,7 @@ if systeme == "":
 if systeme == "D":
     chemin_CP = r"/opt/ogc/ConvPoint_Effigis"
 elif systeme == "W":
-    chemin_CP = r"C:\\Users\\pbug\\.conda\\envs\\pytorch_convpoint_p36\\ConvPoint"
+    chemin_CP = r"D:\\GitHub\\ConvPoint_Effigis"
 else:
     chemin_CP = r"/home/ubuntu/anaconda2/envs/pytorch_convpoint_p36/ConvPoint"
 
