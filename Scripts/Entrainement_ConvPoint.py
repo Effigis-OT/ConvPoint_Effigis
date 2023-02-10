@@ -215,6 +215,7 @@ doss_test = os.path.join(doss_trav, "tst")
 doss_res = os.path.join(doss_trav, "resultats")
 if not os.path.exists(doss_res):
     os.system("mkdir {0}".format(doss_res))
+    os.system("mkdir {0}".format(os.path.join(doss_res, "tst")))
 
 if systeme == "D":
     doss_modele = os.path.join(doss_trav, "models")
