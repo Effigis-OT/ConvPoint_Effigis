@@ -509,6 +509,7 @@ def train(args, dataset_dict, info_class):
             # print("\nnb_class 2: {0}".format(nb_class))
             # print("net.fcout.weight.size 2: {0}".format(net.fcout.weight.size()))
             weights = torch.tensor([0.81, 0.69, 0.5, 1, 1])
+            weights = weights.cuda()
             loss = F.cross_entropy(outputs.view(-1, nb_class), seg.view(-1), weight = weights)
             # loss = F.cross_entropy(outputs.view(-1, nb_class), seg.view(-1))
             loss.backward()
