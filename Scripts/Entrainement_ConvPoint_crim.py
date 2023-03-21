@@ -248,7 +248,7 @@ print("Entrainement selon données des dossiers datasets")
 
 # script_train = r"/home/ubuntu/anaconda2/envs/pytorch_convpoint_p36/ConvPoint/examples/airborne_lidar/
 # airborne_lidar_seg_wandb.py"
-script_train = os.path.join(chemin_CP, "examples/airborne_lidar/airborne_lidar_seg_wandb.py")
+script_train = os.path.join(chemin_CP, "examples/airborne_lidar/airborne_lidar_seg_wandb_crim.py")
 
 os.system("python {0} --savedir {1} --rootdir {2} --testdir {3} --resdir {4} --model_state {5} --dsname {6} --lr {7} "
           "--npoints {8} --blocksize {9} --iter {10} --nepochs {11} --batchsize {12} --num_workers {13} "
