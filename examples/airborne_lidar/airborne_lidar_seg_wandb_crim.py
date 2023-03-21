@@ -666,6 +666,12 @@ def train(args, dataset_dict,
 
     # Create the loss function
     criterion = create_loss_function(args)
+    if args.loss == "ce":
+        loss_name = "crossentropy"
+    elif args.loss == "fl":
+        loss_name = "focal"
+    else:
+        loss_name = "joint"
 
     print("Creating network...")
     if args.model_state != "init":
