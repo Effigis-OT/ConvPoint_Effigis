@@ -49,14 +49,14 @@ from optimizers import Lion
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", default=True, help="Test the model")
-    parser.add_argument("--use_wandb", action='store_true', help="Use wandb for logging")
+    parser.add_argument("--use_wandb",  default=True, action='store_true', help="Use wandb for logging")
     parser.add_argument("--wandb_project_name", default="convpoint_vexcel", type=str, help="Wandb project name")
     parser.add_argument("--loss", choices=['ce', "fl", "ce_fl"], required=True, help="Loss function to use")
     parser.add_argument("--fl_gamma", default=2.0, type=float, help="Focal loss gamma parameter")
     parser.add_argument("--weights", default=None, nargs='*', type=float, help="Classes weights for loss functions")
     parser.add_argument("--optimizer", default="adam", choices=["adam", "sgd", "adamw", "lion"], type=str,
                         help="Optimizer to use")
-    parser.add_argument("--savepts", action="store_true", help="Save the points in the ply files")
+    parser.add_argument("--savepts",  default=True, action="store_true", help="Save the points in the ply files")
     parser.add_argument("--savedir", default=None, type=str, required=True, help="Directory to save the results")
     parser.add_argument("--rootdir", default=None, type=str, required=True, help="Root directory of the dataset")
     parser.add_argument("--testdir", default=None, type=str)
