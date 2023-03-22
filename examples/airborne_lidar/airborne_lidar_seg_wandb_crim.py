@@ -845,7 +845,7 @@ def train(args, dataset_dict,
             best_epoch = epoch
             mod_folder = P(args.savedir)
             mod_folder.mkdir(exist_ok=True, parents=True)
-            last_saved_model = f"CP_{typ_entr}_{args.dsname}_{args.npoints}pts_" \
+            last_saved_model = f"CP_{typ_entr}_{args.dsname}_{nb_class-1}classes_{args.npoints}pts_" \
                                f"{args.blocksize}block_{args.drop}drop_{loss_name}loss_" \
                                f"{args.lr.replace('.', 'p')}lr_{args.nepochs}ep_" \
                                f"{args.iter}iter_batch{args.batchsize}" \
