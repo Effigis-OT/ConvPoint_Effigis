@@ -258,7 +258,7 @@ def test(filename, model, model_features, info_class, args):
     with laspy.file.File(filename0) as in_file:
         header = in_file.header
         xyz = np.vstack((in_file.x, in_file.y, in_file.z)).transpose()
-        str_modele = os.path.basename(args.model_pth)[:-24]
+        str_modele = "_".join(os.path.basename(args.model_pth).split("_")[0:4])
         write_to_las(outdir / f"{las_filename}_classif_{str_modele}.las",
                      xyz=xyz, pred=scores, header=header, info_class=info_class['class_info'])
 

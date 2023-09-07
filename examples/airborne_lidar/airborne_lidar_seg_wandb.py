@@ -769,7 +769,8 @@ def test(args, flist_test, model_folder, model_name, info_class):
             with laspy.file.File(lastest0) as in_file:
                 header = in_file.header
                 xyz = np.vstack((in_file.x, in_file.y, in_file.z)).transpose()
-                out_file = os.path.join(args.resdir, "{0}_preds_{1}.las".format(filename, model_name[:-4]))
+                str_modele = "_".join(model_name.split("_")[0:4])
+                out_file = os.path.join(args.resdir, "{0}_preds_{1}.las".format(filename, str_modele))
                 write_to_las(out_file, xyz=xyz, pred=scores, header=header, info_class=info_class['class_info'])
 
 def pred_to_asprs(pred, info_class):
