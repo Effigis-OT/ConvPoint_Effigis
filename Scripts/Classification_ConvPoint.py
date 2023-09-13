@@ -54,6 +54,8 @@ modeles_dispo["5"] = ["VexcelSherb331brut_5classes", "20", "32672", "CP_fd_Sherb
                                                 "0drop_0p001lr_20ep_600iter_batch8_2work_2023-02-09-17-54-07.pth", 7]
 modeles_dispo["6"] = ["VexcelM28brut221_13ppmc", "20", "32672", "CP_fd_Sub3Nap13ppcm_3classes_32672pts_20block_0drop_"
                                                         "0p001lr_20ep_600iter_batch8_2work_2023-09-06-20-43-43.pth", 5]
+modeles_dispo["7"] = ["PleiadesPanUltraHigh_3cl", "20", "32672", "CP_fd_Pleiades_Pan_Sherb_UltraHigh_CP5cl3cl_"
+                        "3classes_32672pts_20block_0drop_0p001lr_20ep_600iter_batch8_2work_2023-09-12-23-24-07.pth", 5]
 
 print("")
 systeme = input("Quel système est utilisé? (D pour Docker par défaut/W pour Windows/L pour Linux)\n").upper()
