@@ -137,7 +137,8 @@ os.system("python {0} --num_workers {1} --batchsize {2} --modeldir {3} --rootdir
 
 if taille != 0:
     doss_out = os.path.join(doss_trav, "out")
-    nom_classif = os.path.basename(nuage).replace(".las", "_classif_{0}.las".format(os.path.basename(model_path)[:-24]))
+    str_modele = "_".join(os.path.basename(model_path).split("_")[0:4])
+    nom_classif = os.path.basename(nuage).replace(".las", "_classif_{0}.las".format(str_modele))
     nuage_classif = os.path.join(doss_out, nom_classif)
     os.system("las2las -i {0}//*.las -merged -o {1}".format(doss_out, nuage_classif))
     for f1 in os.listdir(doss_out):
