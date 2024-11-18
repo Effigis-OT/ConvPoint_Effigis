@@ -58,6 +58,8 @@ modeles_dispo["7"] = ["PleiadesSherbPanUltraHigh_3cl", "20", "32672", "CP_fd_Ple
                         "3classes_32672pts_20block_0drop_0p001lr_20ep_600iter_batch8_2work_2023-09-12-23-24-07.pth", 5]
 modeles_dispo["8"] = ["PleiadesMarsPanUltraHigh_3cl", "20", "32672", "CP_fd_MarsPan_3classes_32672pts_20block_0drop_"
                         "0p001lr_20ep_600iter_batch8_2work_2024-02-02-13-27-51.pth", 5]
+modeles_dispo["9"] = ["PleiadesSelkirkUltraHigh_3cl", "20", "32672", "CP_fd_PNEO_Selkirk_3classes_32672pts_20block_"
+                      "0drop_0p001lr_20ep_600iter_batch8_2work_2024-11-14-22-48-41.pth", 5]
 
 print("")
 systeme = input("Quel système est utilisé? (D pour Docker par défaut/W pour Windows/L pour Linux)\n").upper()
